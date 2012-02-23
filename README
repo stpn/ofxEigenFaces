@@ -1,0 +1,5 @@
+Ported from: onlineFaceRec.cpp, by Shervin Emami (www.shervinemami.info)
+
+To get this working this you need an haarcascade_frontalface_default.xml in data/bin
+
+2012/ Stepan Boltalin 
