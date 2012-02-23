@@ -1,8 +1,7 @@
 
-//////////////////////////////////////////////////////////////////////////////////////
-// OnlineFaceRec.cpp, by Shervin Emami (www.shervinemami.info) on 30th Dec 2011.
+///Ported from:
+//  OnlineFaceRec.cpp, by Shervin Emami (www.shervinemami.info) on 30th Dec 2011.
 // Online Face Recognition from a camera using Eigenfaces.
-//////////////////////////////////////////////////////////////////////////////////////
 //
 // Some parts are based on the code example by Robin Hewitt (2007) at:
 // "http://www.cognotics.com/opencv/servo_2007_series/part_5/index.html"
@@ -27,10 +26,6 @@
 //    OnlineFaceRec
 //
 //////////////////////////////////////////////////////////////////////////////////////
-
-//
-//  ofxEigenFace.h
-//  EigenFaces
 //
 //  Stepan Boltalin  2/23/12.
 
