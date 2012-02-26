@@ -148,7 +148,6 @@ public:
     int state;
     string filename; //needs a "haarcascade_frontalface_default.xml in data/bin
     
-
  
 
 };

@@ -46,7 +46,11 @@ void ofxEigenFaceFinder::storeEigenfaceImages()
 {
 	// Store the average image to a file
 	printf("Saving the image of the average face as 'out_averageImage.bmp'.\n");
-	cvSaveImage("/Users/stepanboltalin/Documents/openFrameworks/openFrameworks/AppropriatingNewTechnologies/week2/eigenFaces/bin/data/out_averageImage.bmp", pAvgTrainImg);
+
+//to variable?	
+    cvSaveImage(ofToDataPath("out_averageImage.bmp").c_str(), pAvgTrainImg);
+    
+    
 	// Create a large image made of many eigenface images.
 	// Must also convert each eigenface image to a normal 8-bit UCHAR image instead of a 32-bit float image.
 	printf("Saving the %d eigenvector images as 'out_eigenfaces.bmp'\n", nEigens);
@@ -72,7 +76,7 @@ void ofxEigenFaceFinder::storeEigenfaceImages()
 			cvResetImageROI(bigImg);
 			cvReleaseImage(&byteImg);
 		}
-		cvSaveImage("/Users/stepanboltalin/Documents/openFrameworks/openFrameworks/AppropriatingNewTechnologies/week2/eigenFaces/bin/data/out_eigenfaces.bmp", bigImg);
+		cvSaveImage(ofToDataPath("out_eigenfaces.bmp").c_str(), bigImg);
 		cvReleaseImage(&bigImg);
 	}
 }
@@ -137,7 +141,7 @@ int ofxEigenFaceFinder::loadTrainingData(CvMat ** pTrainPersonNumMat)
 	int i;
     
 	// create a file-storage interface
-	fileStorage = cvOpenFileStorage( "/Users/stepanboltalin/Documents/openFrameworks/openFrameworks/AppropriatingNewTechnologies/week2/eigenFaces/bin/data/facedata.xml", 0, CV_STORAGE_READ );
+	fileStorage = cvOpenFileStorage(ofToDataPath("facedata.xml").c_str(), 0, CV_STORAGE_READ );
 	if( !fileStorage ) {
         //		printf("Can't open training database file 'facedata.xml'.\n");
 		return 0;
@@ -197,7 +201,7 @@ void ofxEigenFaceFinder::storeTrainingData()
 	int i;
     
 	// create a file-storage interface
-	fileStorage = cvOpenFileStorage( "/Users/stepanboltalin/Documents/openFrameworks/openFrameworks/AppropriatingNewTechnologies/week2/eigenFaces/bin/data/facedata.xml", 0, CV_STORAGE_WRITE );
+	fileStorage = cvOpenFileStorage( ofToDataPath("facedata.xml").c_str(), 0, CV_STORAGE_WRITE );
     
 	// Store the person names. Added by Shervin.
 	cvWriteInt( fileStorage, "nPersons", nPersons );
@@ -681,7 +685,8 @@ CvMat* ofxEigenFaceFinder::retrainOnline(void)
     
 	// Retrain from the data in the files
 	printf("Retraining with the new person ...\n");
-	learn("/Users/stepanboltalin/Documents/openFrameworks/openFrameworks/AppropriatingNewTechnologies/week2/eigenFaces/bin/data/train.txt");
+    
+	learn(ofToDataPath("train.txt").c_str());
 	printf("Done retraining.\n");
     
 	// Load the previously saved training data
@@ -820,9 +825,9 @@ ofxEigenFace  ofxEigenFaceFinder::recognizeFromCam(ofxCvColorImage img)
             // Store the saved data into the training file.
             printf("Storing the training data for new person '%s'.\n", newPersonName);
             // Append the new person to the end of the training data.
-            trainFile = fopen("/Users/stepanboltalin/Documents/openFrameworks/openFrameworks/AppropriatingNewTechnologies/week2/eigenFaces/bin/data/train.txt", "a");
+            trainFile = fopen(ofToDataPath("train.txt").c_str(), "a");
             for (i=0; i<newPersonFaces; i++) {
-                snprintf(cstr, sizeof(cstr)-1, "/Users/stepanboltalin/Documents/openFrameworks/openFrameworks/AppropriatingNewTechnologies/week2/eigenFaces/bin/data/%d_%s%d.pgm", nPersons+1, newPersonName, i+1);
+                snprintf(cstr, sizeof(cstr)-1, ofToDataPath("%d_%s%d.pgm").c_str(), nPersons+1, newPersonName, i+1);
                 fprintf(trainFile, "%d %s %s\n", nPersons+1, newPersonName, cstr);
             }
             fclose(trainFile);
@@ -938,7 +943,7 @@ ofxEigenFace  ofxEigenFaceFinder::recognizeFromCam(ofxCvColorImage img)
 				// Use a different filename each time.
                 
                 //           cout << "======CSTR======" << cstr << endl;
-				snprintf(cstr, sizeof(cstr)-1, "/Users/stepanboltalin/Documents/openFrameworks/openFrameworks/AppropriatingNewTechnologies/week2/eigenFaces/bin/data/%d_%s%d.pgm", nPersons+1, newPersonName, newPersonFaces+1);
+				snprintf(cstr, sizeof(cstr)-1, ofToDataPath("%d_%s%d.pgm").c_str(), nPersons+1, newPersonName, newPersonFaces+1);
 				printf("Storing the current face of '%s' into image '%s'.\n", newPersonName, cstr);
 				cvSaveImage(cstr, processedFaceImg, NULL);
                 cout << "========newPerSonFaces=======" << newPersonFaces << endl; 
